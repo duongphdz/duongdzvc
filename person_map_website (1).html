@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PersonMap - Interactive People Mapping Platform</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 60px 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Map Page Styles */
+        .map-container {
+            padding: 40px;
+        }
+        
+        .map-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .map-header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .instructions i {
+            color: #667eea;
+            margin-right: 10px;
+        }
+        
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-result-item {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s;
+        }
+        
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .person-count {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        /* Form Styles */
+        .marker-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            min-width: 350px;
+            max-width: 90vw;
+        }
+        
+        .marker-form.active {
+            display: block;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            backdrop-filter: blur(5px);
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        .btn-cancel {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        }
+        
+        .btn-cancel:hover {
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* About Page */
+        .about-content {
+            padding: 60px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-content h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .about-content h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin: 30px 0 15px 0;
+        }
+        
+        .about-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .about-content ul {
+            color: #666;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .about-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        /* Contact Page */
+        .contact-content {
+            padding: 60px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-form {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .contact-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Popup Styles */
+        .leaflet-popup-content {
+            margin: 12px 18px;
+            min-width: 220px;
+        }
+        
+        .person-info {
+            font-family: inherit;
+        }
+        
+        .person-info h3 {
+            margin: 0 0 15px 0;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+            font-size: 1.3rem;
+        }
+        
+        .person-info p {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            line-height: 1.4;
+        }
+        
+        .person-info strong {
+            min-width: 70px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .delete-btn {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(244, 67, 54, 0.4);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+            }
+            
+            .map-container {
+                padding: 20px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+            
+            .controls {
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            button {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page.active {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            color: #666;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #5a67d8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-map-marked-alt"></i>
+                PersonMap
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('map')">Interactive Map</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <section class="hero">
+                <h1><i class="fas fa-globe-americas"></i> Welcome to PersonMap</h1>
+                <p>The ultimate platform for mapping and organizing people's information across the globe</p>
+                <a href="#" onclick="showPage('map')" class="cta-button">
+                    <i class="fas fa-rocket"></i> Start Mapping
+                </a>
+            </section>
+            
+            <section class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3>Interactive Mapping</h3>
+                    <p>Click anywhere on the world map to add people and their information. Visual markers make it easy to see where everyone is located.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Smart Search</h3>
+                    <p>Find people instantly by searching their name, job, domain, city, or country. Real-time results with visual highlighting on the map.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>People Management</h3>
+                    <p>Store comprehensive information about each person including their profession, domain of expertise, and location details.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Data Export</h3>
+                    <p>Export all your people data as JSON files for backup, analysis, or integration with other systems and applications.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Works perfectly on desktop, tablet, and mobile devices. Access your people map from anywhere, anytime.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy Focused</h3>
+                    <p>All data is stored locally in your browser. Your people information remains private and secure on your device.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Map Page -->
+        <div id="map-page" class="page">
+            <div class="map-container">
+                <div class="map-header">
+                    <h1><i class="fas fa-map"></i> Interactive People Map</h1>
+                </div>
+                
+                <div class="instructions">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Instructions:</strong> Click anywhere on the map to add a new person marker. Fill in their information and click "Add Person". Use the search box to find specific people, and click on existing markers to view or delete information.
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search people by name, job, domain, city, or country...">
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                    <button onclick="clearSearch()">
+                        <i class="fas fa-times"></i> Clear Search
+                    </button>
+                </div>
+                
+                <div id="map"></div>
+                
+                <div class="controls">
+                    <div class="person-count">
+                        <i class="fas fa-users"></i>
+                        Total People: <span id="personCount">0</span>
+                    </div>
+                    <button onclick="clearAllMarkers()">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
+                    <button onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button onclick="showStats()">
+                        <i class="fas fa-chart-bar"></i> Show Stats
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="about-content">
+                <h1><i class="fas fa-info-circle"></i> About PersonMap</h1>
+                
+                <p>PersonMap is a powerful, interactive web application designed to help you visualize and organize information about people across the globe. Whether you're managing a team, tracking contacts, or organizing a community, PersonMap provides an intuitive interface to map people's locations and store their key information.</p>
+                
+                <h2><i class="fas fa-star"></i> Key Features</h2>
+                <ul>
+                    <li><strong>Interactive World Map:</strong> Built on OpenStreetMap for accurate, up-to-date geographical data</li>
+                    <li><strong>Person Information Storage:</strong> Store names, jobs, domains, cities, and countries</li>
+                    <li><strong>Real-time Search:</strong> Find people instantly across all stored information</li>
+                    <li><strong>Visual Markers:</strong> Clear, intuitive markers with detailed popup information</li>
+                    <li><strong>Data Export:</strong> Export your data as JSON for backup or integration</li>
+                    <li><strong>Responsive Design:</strong> Works seamlessly on all devices</li>
+                </ul>
+                
+                <h2><i class="fas fa-lightbulb"></i> Use Cases</h2>
+                <p>PersonMap is perfect for various scenarios:</p>
+                <ul>
+                    <li>Team management and organization</li>
+                    <li>Contact and network visualization</li>
+                    <li>Event planning and attendee tracking</li>
+                    <li>Research and survey data visualization</li>
+                    <li>Community organization and management</li>
+                    <li>Business relationship mapping</li>
+                </ul>
+                
+                <h2><i class="fas fa-lock"></i> Privacy & Security</h2>
+                <p>Your privacy is our priority. All data is stored locally in your browser using modern web storage technologies. No information is transmitted to external servers, ensuring your people data remains completely private and secure.</p>
+                
+                <h2><i class="fas fa-code"></i> Technology</h2>
+                <p>PersonMap is built using modern web technologies including HTML5, CSS3, JavaScript, and the Leaflet.js mapping library with OpenStreetMap data. The application is designed to be fast, responsive, and accessible across all modern web browsers.</p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="contact-content">
+                <h1><i class="fas fa-envelope"></i> Contact Us</h1>
+                <p>We'd love to hear from you! Whether you have questions, feedback, or suggestions for improving PersonMap, don't hesitate to reach out.</p>
+                
+                <div class="contact-form">
+                    <h2>Send us a Message</h2>
+                    <form onsubmit="sendMessage(event)">
+                        <div class="form-group">
+                            <label for="contactName">Your Name:</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address:</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject:</label>
+                            <input type="text" id="contactSubject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message:</label>
+                            <textarea id="contactMessage" required placeholder="Tell us what's on your mind..."></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px; color: #666;">
+                    <p><i class="fas fa-clock"></i> We typically respond within 24 hours</p>
+                    <p><i class="fas fa-heart"></i> Thank you for using PersonMap!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeForm()"></div>
+    
+    <!-- Person Form -->
+    <div class="marker-form" id="markerForm">
+        <h3><i class="fas fa-user-plus"></i> Add Person Information</h3>
+        <div class="form-group">
+            <label for="personName"><i class="fas fa-user"></i> Name:</label>
+            <input type="text" id="personName" placeholder="Enter person's name" required>
+        </div>
+        <div class="form-group">
+            <label for="personJob"><i class="fas fa-briefcase"></i> Job:</label>
+            <input type="text" id="personJob" placeholder="Enter job title">
+        </div>
+        <div class="form-group">
+            <label for="personDomain"><i class="fas fa-industry"></i> Domain:</label>
+            <input type="text" id="personDomain" placeholder="Enter work domain/field">
+        </div>
+        <div class="form-group">
+            <label for="personCity"><i class="fas fa-city"></i> City:</label>
+            <input type="text" id="personCity" placeholder="Enter city">
+        </div>
+        <div class="form-group">
+            <label for="personCountry"><i class="fas fa-flag"></i> Country:</label>
+            <input type="text" id="personCountry" placeholder="Enter country">
+        </div>
+        <div class="form-buttons">
+            <button class="btn-cancel" onclick="closeForm()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button onclick="addPerson()">
+                <i class="fas fa-plus"></i> Add Person
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PersonMap. Built with ❤️ for better people organization.</p>
+        <div class="footer-links">
+            <a href="#" onclick="showPage('about')">About</a>
+            <a href="#" onclick="showPage('contact')">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = pageId === 'map' ? 'map-page' : pageId;
+            document.getElementById(targetPage).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Initialize map if map page is shown
+            if (pageId === 'map' && !window.mapInitialized) {
+                initializeMap();
+            }
+        }
+        
+        // Map Variables
+        let map, personMarkers = [], currentLatLng = null;
+        
+        // Custom person icon
+        const personIcon = L.divIcon({
+            className: 'custom-person-icon',
+            html: '👤',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, -15]
+        });
+        
+        // Initialize map
+        function initializeMap() {
+            if (window.mapInitialized) return;
+            
+            map = L.map('map').setView([40.7128, -74.0060], 3);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add click event to map
+            map.on('click', function(e) {
+                currentLatLng = e.latlng;
+                showForm();
+            });
+            
+            // Initialize search functionality
+            initializeSearch();
+            
+            // Update counter
+            updatePersonCount();
+            
+            window.mapInitialized = true;
+            console.log('PersonMap initialized successfully!');
+        }
+        
+        // Form Functions
+        function showForm() {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('markerForm').classList.add('active');
+            document.getElementById('personName').focus();
+            
+            // Clear form
+            document.getElementById('personName').value = '';
+            document.getElementById('personJob').value = '';
+            document.getElementById('personDomain').value = '';
+            document.getElementById('personCity').value = '';
+            document.getElementById('personCountry').value = '';
+        }
+        
+        function closeForm() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('markerForm').classList.remove('active');
+            currentLatLng = null;
+        }
+        
+        function addPerson() {
+            const name = document.getElementById('personName').value.trim();
+            const job = document.getElementById('personJob').value.trim();
+            const domain = document.getElementById('personDomain').value.trim();
+            const city = document.getElementById('personCity').value.trim();
+            const country = document.getElementById('personCountry').value.trim();
+            
+            if (!name) {
+                alert('Please enter a name for the person.');
+                return;
+            }
+            
+            if (!currentLatLng) {
+                alert('Please click on the map first to select a location.');
+                return;
+            }
+            
+            // Create person object
+            const person = {
+                id: Date.now(),
+                name: name,
+                job: job || 'Not specified',
+                domain: domain || 'Not specified',
+                city: city || 'Not specified',
+                country: country || 'Not specified',
+                lat: currentLatLng.lat,
+                lng: currentLatLng.lng
+            };
+            
+            // Create marker
+            const marker = L.marker([person.lat, person.lng], {icon: personIcon}).addTo(map);
+            
+            // Create popup content
+            const popupContent = createPopupContent(person);
+            marker.bindPopup(popupContent);
+            
+            // Store person data with marker
+            marker.personData = person;
+            personMarkers.push(marker);
+            
+            // Update counter
+            updatePersonCount();
+            
+            // Close form
+            closeForm();
+            
+            // Show success message
+            marker.openPopup();
+            
+            // Save to localStorage
+            saveToStorage();
+        }
+        
+        function createPopupContent(person) {
+            return `
+                <div class="person-info">
+                    <h3>${person.name}</h3>
+                    <p><strong>Job:</strong> ${person.job}</p>
+                    <p><strong>Domain:</strong> ${person.domain}</p>
+                    <p><strong>City:</strong> ${person.city}</p>
+                    <p><strong>Country:</strong> ${person.country}</p>
+                    <button class="delete-btn" onclick="deletePerson(${person.id})">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            `;
+        }
+        
+        function deletePerson(personId) {
+            const markerIndex = personMarkers.findIndex(marker => marker.personData.id === personId);
+            if (markerIndex !== -1) {
+                // Remove marker from map
+                map.removeLayer(personMarkers[markerIndex]);
+                // Remove from array
+                personMarkers.splice(markerIndex, 1);
+                // Update counter
+                updatePersonCount();
+                // Save to storage
+                saveToStorage();
+            }
+        }
+        
+        function clearAllMarkers() {
+            if (personMarkers.length === 0) {
+                alert('No markers to clear.');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to delete all ${personMarkers.length} person markers?`)) {
+                personMarkers.forEach(marker => {
+                    map.removeLayer(marker);
+                });
+                personMarkers = [];
+                updatePersonCount();
+                saveToStorage();
+            }
+        }
+        
+        function updatePersonCount() {
+            document.getElementById('personCount').textContent = personMarkers.length;
+        }
+        
+        function exportData() {
+            if (personMarkers.length === 0) {
+                alert('No data to export.');
+                return;
+            }
+            
+            const data = personMarkers.map(marker => marker.personData);
+            const jsonData = JSON.stringify(data, null, 2);
+            
+            // Create download link
+            const blob = new Blob([jsonData], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `personmap_data_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function showStats() {
+            if (personMarkers.length === 0) {
+                alert('No data to analyze. Add some people first!');
+                return;
+            }
+            
+            const stats = generateStats();
+            alert(`📊 PersonMap Statistics:
+            
+Total People: ${stats.total}
+Countries: ${stats.countries}
+Cities: ${stats.cities}
+Most Common Job: ${stats.topJob}
+Most Common Domain: ${stats.topDomain}
+Most Common Country: ${stats.topCountry}`);
+        }
+        
+        function generateStats() {
+            const data = personMarkers.map(m => m.personData);
+            const countries = [...new Set(data.map(p => p.country).filter(c => c !== 'Not specified'))];
+            const cities = [...new Set(data.map(p => p.city).filter(c => c !== 'Not specified'))];
+            
+            // Count frequencies
+            const jobCounts = {};
+            const domainCounts = {};
+            const countryCounts = {};
+            
+            data.forEach(person => {
+                if (person.job !== 'Not specified') {
+                    jobCounts[person.job] = (jobCounts[person.job] || 0) + 1;
+                }
+                if (person.domain !== 'Not specified') {
+                    domainCounts[person.domain] = (domainCounts[person.domain] || 0) + 1;
+                }
+                if (person.country !== 'Not specified') {
+                    countryCounts[person.country] = (countryCounts[person.country] || 0) + 1;
+                }
+            });
+            
+            const getTopItem = (counts) => {
+                return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, 'None');
+            };
+            
+            return {
+                total: data.length,
+                countries: countries.length,
+                cities: cities.length,
+                topJob: getTopItem(jobCounts),
+                topDomain: getTopItem(domainCounts),
+                topCountry: getTopItem(countryCounts)
+            };
+        }
+        
+        // Search functionality
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(performSearch, 300);
+            });
+        }
+        
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (query.length === 0) {
+                hideSearchResults();
+                clearHighlights();
+                return;
+            }
+            
+            const results = personMarkers.filter(marker => {
+                const person = marker.personData;
+                return person.name.toLowerCase().includes(query) ||
+                       person.job.toLowerCase().includes(query) ||
+                       person.domain.toLowerCase().includes(query) ||
+                       person.city.toLowerCase().includes(query) ||
+                       person.country.toLowerCase().includes(query);
+            });
+            
+            displaySearchResults(results, query);
+            highlightSearchResults(results);
+        }
+        
+        function displaySearchResults(results, query) {
+            const searchResults = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+            } else {
+                searchResults.innerHTML = results.map(marker => {
+                    const person = marker.personData;
+                    return `
+                        <div class="search-result-item" onclick="selectPerson(${person.id})">
+                            <strong>${person.name}</strong><br>
+                            <small>${person.job} • ${person.city}, ${person.country}</small>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            searchResults.style.display = 'block';
+        }
+        
+        function hideSearchResults() {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+        
+        function selectPerson(personId) {
+            const marker = personMarkers.find(m => m.personData.id === personId);
+            if (marker) {
+                map.setView([marker.personData.lat, marker.personData.lng], 15);
+                marker.openPopup();
+                hideSearchResults();
+            }
+        }
+        
+        function highlightSearchResults(results) {
+            // Clear all highlights first
+            clearHighlights();
+            
+            // Highlight search results
+            results.forEach(marker => {
+                marker.setIcon(L.divIcon({
+                    className: 'custom-person-icon',
+                    html: '🔍',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15],
+                    popupAnchor: [0, -15]
+                }));
+            });
+        }
+        
+        function clearHighlights() {
+            personMarkers.forEach(marker => {
+                marker.setIcon(personIcon);
+            });
+        }
+        
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            hideSearchResults();
+            clearHighlights();
+        }
+        
+        // Storage functions
+        function saveToStorage() {
+            const data = personMarkers.map(marker => marker.personData);
+            localStorage.setItem('personMapData', JSON.stringify(data));
+        }
+        
+        function loadFromStorage() {
+            const stored = localStorage.getItem('personMapData');
+            if (stored) {
+                try {
+                    const data = JSON.parse(stored);
+                    data.forEach(person => {
+                        const marker = L.marker([person.lat, person.lng], {icon: personIcon}).addTo(map);
+                        const popupContent = createPopupContent(person);
+                        marker.bindPopup(popupContent);
+                        marker.personData = person;
+                        personMarkers.push(marker);
+                    });
+                    updatePersonCount();
+                } catch (e) {
+                    console.error('Error loading stored data:', e);
+                }
+            }
+        }
+        
+        // Contact form
+        function sendMessage(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Simulate sending message
+            alert(`Thank you ${name}! Your message has been received. We'll get back to you at ${email} soon.`);
+            
+            // Clear form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactSubject').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+        
+        // Event listeners
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('markerForm').classList.contains('active')) {
+                addPerson();
+            } else if (e.key === 'Escape') {
+                closeForm();
+            }
+        });
+        
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-box')) {
+                hideSearchResults();
+            }
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PersonMap website loaded successfully!');
+        });
+        
+        // Auto-initialize map if directly accessing map page
+        if (window.location.hash === '#map') {
+            showPage('map');
+        }
+    </script>
+</body>
+</html>
