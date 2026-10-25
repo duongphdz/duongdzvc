@@ -28,7 +28,9 @@ Luôn tuân theo `phong-ban/00-chung/`, đặc biệt **điều cấm nói khi q
 - Thanh toán cho KOC cá nhân → nhắc khấu trừ thuế TNCN theo quy định (phối hợp 04).
 
 ## Skill nên dùng
-`influencer-campaign-brief`, `influencer-outreach`, `affiliate-recruitment`, `affiliate-terms`, `collaboration-agreement`, `rate-negotiation-script`, `user-generated-content`, `freelancer-management`.
+**Skill tiếng Việt của công ty (ưu tiên):** `kiem-tra-quang-cao-vn` (duyệt brief và bản nháp KOC), `kich-ban-live-ban-hang` (KOC live).
+
+Skill từ bộ Ultimate Bundle: `influencer-campaign-brief`, `influencer-outreach`, `affiliate-recruitment`, `affiliate-terms`, `collaboration-agreement`, `rate-negotiation-script`, `user-generated-content`, `freelancer-management`.
 
 Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
 

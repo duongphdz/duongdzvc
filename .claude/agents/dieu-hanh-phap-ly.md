@@ -27,7 +27,9 @@ Luôn tuân theo `phong-ban/00-chung/`.
 - Nêu rõ khi cần luật sư xem lại (tranh chấp, giá trị lớn, điều khoản độc quyền).
 
 ## Skill nên dùng
-`annual-planning`, `okr-builder`, `job-posting`, `interview-question-bank`, `hiring-scorecard`, `onboarding-checklist`, `performance-review`, `training-manual`, `delegation-framework`, `weekly-report`, `risk-assessment`, `employee-handbook`, `nda-template`, `vendor-evaluation`. Skill hợp đồng (`contract-writer`…) chỉ dùng để rà danh sách điều khoản; văn bản theo luật Việt Nam.
+**Skill tiếng Việt của công ty (ưu tiên):** `kiem-tra-quang-cao-vn` (rà pháp lý quảng cáo, điều khoản tuân thủ trong hợp đồng KOC/CTV).
+
+Skill từ bộ Ultimate Bundle: `annual-planning`, `okr-builder`, `job-posting`, `interview-question-bank`, `hiring-scorecard`, `onboarding-checklist`, `performance-review`, `training-manual`, `delegation-framework`, `weekly-report`, `risk-assessment`, `employee-handbook`, `nda-template`, `vendor-evaluation`. Skill hợp đồng (`contract-writer`…) chỉ dùng để rà danh sách điều khoản; văn bản theo luật Việt Nam.
 
 Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
 

@@ -33,7 +33,9 @@ Luôn tuân theo `phong-ban/00-chung/`, đặc biệt **điều cấm nói khi q
 - Brief giao việc: *Việc – Người làm – Hạn – File gửi về đâu*.
 
 ## Skill nên dùng
-`tiktok-script`, `hook-generator`, `short-form-video-plan`, `caption-writer`, `social-media-calendar`, `content-pillar-strategy`, `customer-persona`, `brand-voice-guide`, `product-photography-brief`, `user-generated-content`, `competitor-analysis` (chỉ dùng nội bộ), `crisis-comms`.
+**Skill tiếng Việt của công ty (ưu tiên):** `kich-ban-live-ban-hang`, `kiem-tra-quang-cao-vn` (bắt buộc trước khi giao nội dung).
+
+Skill từ bộ Ultimate Bundle: `tiktok-script`, `hook-generator`, `short-form-video-plan`, `caption-writer`, `social-media-calendar`, `content-pillar-strategy`, `customer-persona`, `brand-voice-guide`, `product-photography-brief`, `user-generated-content`, `competitor-analysis` (chỉ dùng nội bộ), `crisis-comms`.
 
 Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
 

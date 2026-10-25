@@ -29,7 +29,9 @@ Luôn tuân theo `phong-ban/00-chung/`.
 - Không chép bảng ROAS hoà vốn/giá vốn vào tài liệu gửi ra ngoài.
 
 ## Skill nên dùng
-`ad-performance-report`, `ad-spend-calculator`, `metric-definition-guide`, `conversion-funnel-analysis`, `ab-test-plan`, `tiktok-ad-script`, `ad-creative-brief`, `customer-lifetime-value`, `roi-calculator`, `retargeting-strategy`.
+**Skill tiếng Việt của công ty (ưu tiên):** `kiem-tra-quang-cao-vn` (trước khi chạy quảng cáo trả phí), `dang-ky-campaign-san` (bước tính giá, ROAS hoà vốn mới).
+
+Skill từ bộ Ultimate Bundle: `ad-performance-report`, `ad-spend-calculator`, `metric-definition-guide`, `conversion-funnel-analysis`, `ab-test-plan`, `tiktok-ad-script`, `ad-creative-brief`, `customer-lifetime-value`, `roi-calculator`, `retargeting-strategy`.
 
 Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
 

@@ -154,9 +154,15 @@ done
 9. `influencer-campaign-brief` (07)
 10. `influencer-outreach` (07)
 
-## Còn thiếu trong bộ (nên tự viết skill tiếng Việt)
+## Skill tiếng Việt của công ty (đã viết, nằm trong repo)
 
-- **Quảng cáo TPBVSK / mỹ phẩm theo luật Việt Nam**: thay cho `supplement-disclaimer`
-- **Kịch bản LIVE bán hàng TikTok/Shopee**: bộ skill không có skill livestream
-- **Đối soát sàn với meInvoice và MISA**: đặc thù Việt Nam
-- **Đăng ký campaign Shopee/TikTok Shop**: hạn đăng ký, các loại giá
+Bộ Ultimate Bundle không có 4 skill dưới đây nên công ty tự viết, lưu ở `.claude/skills/`. Khi trùng việc với skill của bộ, ưu tiên 4 skill này.
+
+| Skill | Phòng dùng | Thay cho / bổ sung |
+|---|---|---|
+| [`kiem-tra-quang-cao-vn`](../.claude/skills/kiem-tra-quang-cao-vn/SKILL.md) | 02, 03, 06, 07 (bắt buộc) | Thay `supplement-disclaimer` (luật FDA Mỹ): rà TPBVSK, bình bú/núm ti, mỹ phẩm, nội dung KOC |
+| [`kich-ban-live-ban-hang`](../.claude/skills/kich-ban-live-ban-hang/SKILL.md) | 01, 02, 07 | Bộ không có skill livestream |
+| [`dang-ky-campaign-san`](../.claude/skills/dang-ky-campaign-san/SKILL.md) | 01, 06 | Kết hợp với `discount-strategy`; tính lãi gộp sau phí sàn, voucher cộng dồn |
+| [`doi-soat-san-meinvoice-misa`](../.claude/skills/doi-soat-san-meinvoice-misa/SKILL.md) | 04 | Thay `bookkeeping-setup` (chuẩn Mỹ) |
+
+Cài trên claude.ai: nén từng thư mục trong `.claude/skills/` thành file .zip rồi tải lên Customize → Skills. Trong Claude Code, các skill này tự có hiệu lực khi mở repo.
