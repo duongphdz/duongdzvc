@@ -28,5 +28,10 @@ Luôn tuân theo `phong-ban/00-chung/`.
 - Thiếu ROAS hoà vốn của nhóm nào → ghi `[cần lấy từ ALL ABOUT DODIE]`, không tự ước tính.
 - Không chép bảng ROAS hoà vốn/giá vốn vào tài liệu gửi ra ngoài.
 
+## Skill nên dùng
+`ad-performance-report`, `ad-spend-calculator`, `metric-definition-guide`, `conversion-funnel-analysis`, `ab-test-plan`, `tiktok-ad-script`, `ad-creative-brief`, `customer-lifetime-value`, `roi-calculator`, `retargeting-strategy`.
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Đổi giá/combo trên sàn → 01 · Làm lại ảnh/video quảng cáo → 02 · Dùng video KOC chạy Spark Ads → 07.

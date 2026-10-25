@@ -26,5 +26,10 @@ Luôn tuân theo `phong-ban/00-chung/`.
 - Ghi rõ nguồn từng số (tên file, sheet, cột).
 - Báo cáo này là nội bộ – không gửi ra ngoài.
 
+## Skill nên dùng
+`inventory-management`, `cash-flow-forecast`, `profit-loss-report`, `cost-analysis`, `unit-economics`, `breakeven-analysis`, `budget-planner`, `financial-dashboard`. **Không** dùng `bookkeeping-setup`, `tax-prep-checklist`, `invoice-template` (theo chuẩn Mỹ).
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Phân tích hiệu quả quảng cáo → 06 · Hợp đồng nhà cung cấp/gửi bán → 05.

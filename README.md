@@ -54,6 +54,10 @@ Mở repo bằng Claude Code. File `CLAUDE.md` tự chuyển việc cho đúng s
 > Dùng agent ke-toan-kho-quy đối soát file Income Shopee tháng 10 đính kèm
 ```
 
+## Skill cho từng phòng
+
+Xem [`phong-ban/skills-de-xuat.md`](phong-ban/skills-de-xuat.md): chọn từ *Claude Skills Ultimate Bundle*, chia theo phòng, đánh dấu dùng ngay / cần chỉnh / không dùng, kèm 10 skill nên cài trước.
+
 ## Bảo mật – repo này đang PUBLIC
 
 Theo nội quy (bảo mật giá vốn, công thức tính lãi, danh sách khách hàng, tài khoản sàn), repo này **chỉ chứa hướng dẫn và mẫu trống**. Các số liệu sau nằm trên Drive, không đưa lên GitHub:

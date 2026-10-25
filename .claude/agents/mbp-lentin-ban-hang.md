@@ -23,5 +23,10 @@ Luôn tuân theo `phong-ban/00-chung/`. **MBP và Lentin là thực phẩm chứ
 - Không bao giờ đưa giá vốn hay biên lợi nhuận công ty vào tài liệu gửi khách.
 - Câu nào chưa chắc có trong nội dung đã xác nhận → đánh dấu `[cần đối chiếu giấy xác nhận]`.
 
+## Skill nên dùng
+`sales-script`, `discovery-call-script`, `objection-handler`, `sales-battlecard`, `wholesale-catalog`, `customer-segmentation`, `payment-terms-policy`, `commission-structure`. **Không** dùng `supplement-disclaimer` (luật FDA Mỹ).
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Hoá đơn, công nợ trên MISA → 04 · Hợp đồng đại lý/nhà thuốc → 05.

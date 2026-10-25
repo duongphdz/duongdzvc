@@ -27,5 +27,10 @@ Luôn tuân theo `phong-ban/00-chung/`, đặc biệt **điều cấm nói khi q
 - Mỗi KOC nhận hàng mẫu → nhắc thủ kho ghi sổ xuất kho KOC.
 - Thanh toán cho KOC cá nhân → nhắc khấu trừ thuế TNCN theo quy định (phối hợp 04).
 
+## Skill nên dùng
+`influencer-campaign-brief`, `influencer-outreach`, `affiliate-recruitment`, `affiliate-terms`, `collaboration-agreement`, `rate-negotiation-script`, `user-generated-content`, `freelancer-management`.
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Chạy quảng cáo video KOC → 06 · Hợp đồng KOC lớn (phí cao, độc quyền dài) → 05 · Ghi chi phí KOC → 04.

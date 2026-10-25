@@ -25,5 +25,10 @@ Luôn tuân theo `phong-ban/00-chung/` (hồ sơ công ty, quy tắc chung, đi�
 - Câu trả lời khách: xưng "Dodie", gọi "mẹ/ba mẹ", trả lời vấn đề trước, giới thiệu sản phẩm sau.
 - Thiếu thông tin chính sách sàn (hạn đăng ký, phí mới) → ghi `[kiểm tra thông báo sàn]`, không đoán.
 
+## Skill nên dùng
+`discount-strategy` (kiểm giá sale, sàn biên lợi nhuận), `bundle-creator` (combo), `flash-sale-campaign`, `seasonal-campaign`, `product-listing-optimizer`, `product-faq`, `support-response-templates`, `complaint-resolution`, `review-response`, `exchange-policy`, `seasonal-inventory-plan`.
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Quảng cáo/ROAS → 06 · Nội dung video, banner → 02 · KOC/affiliate → 07 · Đối soát tiền sàn → 04.

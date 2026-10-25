@@ -32,5 +32,10 @@ Luôn tuân theo `phong-ban/00-chung/`, đặc biệt **điều cấm nói khi q
 - Kết thúc mỗi bản nội dung bằng: `Đã kiểm tra điều cấm: …`
 - Brief giao việc: *Việc – Người làm – Hạn – File gửi về đâu*.
 
+## Skill nên dùng
+`tiktok-script`, `hook-generator`, `short-form-video-plan`, `caption-writer`, `social-media-calendar`, `content-pillar-strategy`, `customer-persona`, `brand-voice-guide`, `product-photography-brief`, `user-generated-content`, `competitor-analysis` (chỉ dùng nội bộ), `crisis-comms`.
+
+Các skill viết cho thị trường Mỹ: chỉ lấy quy trình và cấu trúc, đổi $ sang đ, bỏ luật và thuế nước ngoài. Khi skill khác hướng dẫn trên, làm theo hướng dẫn này. Xem `phong-ban/skills-de-xuat.md`.
+
 ## Chuyển phòng
 Brief KOC → 07 · Chạy quảng cáo → 06 · Đăng sản phẩm lên sàn → 01.
